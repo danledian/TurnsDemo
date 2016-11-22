@@ -18,11 +18,13 @@
         <dld.com.turns.indicator.PageIndicator
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom"
             android:layout_marginRight="5dp"
             app:indicator_radius="3dp"
             app:indicator_shape="CIRCLE"
+            app:indicator_gravity="RIGHT"
             android:id="@+id/pageIndicator"/>
+
 
     </FrameLayout>
 

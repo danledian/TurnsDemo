@@ -1,7 +1,6 @@
 package dld.com.turns.adapter;
 
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +43,7 @@ public abstract class TurnsPagerAdapter extends PagerAdapter{
             mOnItemClickListener.onItemClick(view, position, id);
     }
 
-    public Object getItem(int position){
-        return mItemViews.get(position);
-    }
-
-    protected abstract Object instantiateItem(int position);
+    protected abstract Object instantiateTurnsItem(ViewGroup container, int position);
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
@@ -74,11 +69,11 @@ public abstract class TurnsPagerAdapter extends PagerAdapter{
         }
         Object obj = mItemViews.get(position);
         if(obj == null){
-            obj = instantiateItem(itemPosition);
+            obj = instantiateTurnsItem(container, itemPosition);
             ((View)obj).setOnClickListener(new ViewPagerOnClickListener(getRealPosition(position)));
             mItemViews.put(position, obj);
         }
-        container.addView((View) obj);
+        container.addView(((View) obj), ((View)obj).getLayoutParams());
         return obj;
     }
 

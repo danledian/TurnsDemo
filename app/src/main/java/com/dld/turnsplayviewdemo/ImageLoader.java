@@ -14,8 +14,9 @@ public class ImageLoader {
     public static void load(Context context, String url, ImageView imageView){
         Glide.with(context)
         .load(url)
-        .error(R.mipmap.ic_launcher)
-        .placeholder(R.mipmap.ic_launcher)
+        .error(R.mipmap.default_image)
+        .placeholder(R.mipmap.default_image)
+        .dontAnimate()
         .into(imageView);
     }
 }

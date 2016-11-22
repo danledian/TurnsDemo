@@ -20,6 +20,13 @@
             <enum name="SQUARE" value="1"/>
             <enum name="ROUND_RECT" value="2"/>
         </attr>
+
+        <attr name="indicator_gravity" format="enum|reference">
+            <enum name="LEFT" value="0"/>
+            <enum name="CENTER" value="1"/>
+            <enum name="RIGHT" value="2"/>
+        </attr>
+
     </declare-styleable>
 
 </resources>

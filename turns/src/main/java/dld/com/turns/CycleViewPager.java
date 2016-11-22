@@ -17,9 +17,6 @@ import dld.com.turns.scroller.CycleViewScroller;
 
 public class CycleViewPager extends ViewPager{
 
-    /**
-     * Callback interface for responding to changing state of the selected page.
-     */
     public interface OnCycleViewPageChangeListener {
 
         void onTurnsPageScrolled(int position, float positionOffset, int positionOffsetPixels);
@@ -31,10 +28,6 @@ public class CycleViewPager extends ViewPager{
 
     public interface OnItemClickListener {
 
-        /**
-         * Callback method to be invoked when an item in this ViewPager has
-         * been clicked.
-         */
         void onItemClick(View view, int position, long id);
     }
 
@@ -76,7 +69,7 @@ public class CycleViewPager extends ViewPager{
         super.setAdapter(adapter);
         count = adapter.getCount();
         if(adapter.getCount() != 0)
-            setCurrentItem(1, false);
+            setCurrentItem(1);
     }
 
     private void initViewPagerScroll() {
@@ -135,11 +128,6 @@ public class CycleViewPager extends ViewPager{
         }
     }
 
-    /**
-     * 获取实际位置
-     * @param position
-     * @return
-     */
     protected int getRealPosition(int position){
         int realCount = count - 2;
         position = (position + realCount - 1)%realCount;

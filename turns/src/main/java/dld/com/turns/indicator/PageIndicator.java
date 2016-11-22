@@ -25,7 +25,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
 
     private final int DEFAULT_INDICATOR_RADIUS = dp2Px(3f);
     private static final int DEFAULT_INDICATOR_MARGIN = 20;
-    private static final int DEFAULT_INDICATOR_SELECTED_COLOR = Color.parseColor("#515658");
+    private static final int DEFAULT_INDICATOR_SELECTED_COLOR = Color.parseColor("#4579D3");
     private static final int DEFAULT_INDICATOR_UNSELECTED_COLOR = Color.WHITE;
     private static final boolean DEFAULT_INDICATOR_IS_SCROLL = false;
 
@@ -42,6 +42,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     private Indicator mCurrentIndicator;
 
     private boolean isAutoCycleViewPager;
+    private int gravity;
 
     private static final Shape[] shapes = {
             Shape.CIRCLE,
@@ -104,6 +105,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
             mIndicatorMargin = ta.getDimensionPixelSize(R.styleable.PageIndicator_indicator_margin, DEFAULT_INDICATOR_MARGIN);
             mIndicatorIsScroll = ta.getBoolean(R.styleable.PageIndicator_indicator_isScroll, DEFAULT_INDICATOR_IS_SCROLL);
             mBackgroundColor = ta.getColor(R.styleable.PageIndicator_indicator_background, Color.TRANSPARENT);
+            gravity = ta.getInteger(R.styleable.PageIndicator_indicator_gravity, 1);
             if(ta.hasValue(R.styleable.PageIndicator_indicator_shape)){
                 int integer = ta.getInteger(R.styleable.PageIndicator_indicator_shape, -1);
                 setIndicatorShape(shapes[integer]);
@@ -164,7 +166,14 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     private void layoutIndicator() {
         if(mIndicators.size() == 0) return;
         int length = mIndicators.size() * mIndicatorRadius * 2 + (mIndicators.size() - 1) * mIndicatorMargin;
-        int startX = (getMeasuredWidth() - length)/2;
+        int startX;
+        if(gravity == 0){
+            startX = 0;
+        }else if(gravity == 1){
+            startX = (getMeasuredWidth() - length)/2;
+        }else {
+            startX = getMeasuredWidth() - length;
+        }
         int y = getMeasuredHeight()/2 - mIndicatorRadius;
         layoutBg(startX, y);
         layoutSelectedIndicator(y);
