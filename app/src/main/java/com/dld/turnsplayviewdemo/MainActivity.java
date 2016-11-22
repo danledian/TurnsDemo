@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox mScrollEnableCb;
 
     private String[] imageUrls = new String[]{
-        "http://img4.imgtn.bdimg.com/it/u=1765260951,797831689&fm=21&gp=0.jpg",
+        "http://pic34.nipic.com/20131022/12106323_115210747368_2.jpg",
         "http://img4.imgtn.bdimg.com/it/u=1765260951,797831689&fm=21&gp=0.jpg",
         "http://picyun.90sheji.com/design/00/03/78/94/s_1024_54efd5ac859cc.jpg"
     };
