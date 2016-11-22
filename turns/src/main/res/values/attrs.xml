@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PageIndicator">
+
+        <attr name="indicator_background" format="color|reference"/>
+
+        <attr name="indicator_radius" format="dimension|reference"/>
+
+        <attr name="indicator_selectedColor" format="color|reference"/>
+
+        <attr name="indicator_unselectedColor" format="color|reference"/>
+
+        <attr name="indicator_margin" format="dimension|reference"/>
+
+        <attr name="indicator_isScroll" format="boolean|reference"/>
+
+        <attr name="indicator_shape" format="enum|reference">
+            <enum name="CIRCLE" value="0"/>
+            <enum name="SQUARE" value="1"/>
+            <enum name="ROUND_RECT" value="2"/>
+        </attr>
+    </declare-styleable>
+
+</resources>
