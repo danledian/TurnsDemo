@@ -23,6 +23,7 @@
             app:indicator_radius="3dp"
             app:indicator_shape="CIRCLE"
             app:indicator_gravity="RIGHT"
+            app:indicator_isScroll="true"
             android:id="@+id/pageIndicator"/>
 
 
@@ -32,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView

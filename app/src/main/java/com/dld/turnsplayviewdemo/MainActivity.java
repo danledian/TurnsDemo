@@ -53,24 +53,6 @@ public class MainActivity extends AppCompatActivity {
         });
         mCycleViewPager.startAutoCycle();
 
-        int count = ((TurnsPagerAdapter)mCycleViewPager.getAdapter()).getItemCount();
-
-        mCycleViewPager.setOnCycleViewPageChangeListener(new CycleViewPager.OnCycleViewPageChangeListener() {
-            @Override
-            public void onTurnsPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onTurnsPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onTurnsPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     class BasePagerAdapter extends TurnsPagerAdapter {
@@ -91,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setListener() {
 
-        mScrollEnableCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mPageIndicator.setIndicatorIsScroll(isChecked);
-            }
-        });
+//        mScrollEnableCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                mPageIndicator.setIndicatorIsScroll(isChecked);
+//            }
+//        });
     }
 
     @Override

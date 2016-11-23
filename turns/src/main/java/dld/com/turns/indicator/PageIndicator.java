@@ -43,6 +43,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
 
     private boolean isAutoCycleViewPager;
     private int gravity;
+    private int count;
 
     private static final Shape[] shapes = {
             Shape.CIRCLE,
@@ -63,6 +64,8 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
         setUp(context, attrs);
     }
 
+    private int previousPosition = 0;
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -73,8 +76,16 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
 
     @Override
     public void onPageSelected(int position) {
-        if(!mIndicatorIsScroll)
+        if(!mIndicatorIsScroll){
             nextItem(position, 0f);
+        }else {
+            if ((position == count - 1 && previousPosition == 0) ||
+                    position == 0 && previousPosition == count - 1){
+                nextItem(position, 0f);
+            }
+            previousPosition = position;
+        }
+
     }
 
     @Override
@@ -121,7 +132,6 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     public void setViewPager(ViewPager viewPager){
         if(viewPager == null || viewPager.getAdapter() == null)
             return;
-        int count;
         if(viewPager instanceof CycleViewPager){
             isAutoCycleViewPager = true;
             count = ((TurnsPagerAdapter)viewPager.getAdapter()).getItemCount();
