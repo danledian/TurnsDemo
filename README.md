@@ -8,7 +8,7 @@
 ##Gradle
 
     dependencies {
-        compile 'com.dld.library:turns:1.0.1'
+        compile 'com.dld.library:turns:1.0.6'
     }
 
 ##Maven
@@ -16,7 +16,7 @@
     <dependency>
       <groupId>com.dld.library</groupId>
       <artifactId>turns</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.6</version>
       <type>pom</type>
     </dependency>
 

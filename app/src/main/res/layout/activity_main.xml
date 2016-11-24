@@ -15,14 +15,21 @@
             android:layout_height="match_parent"
             android:id="@+id/viewPager"/>
 
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/vp"/>
+
         <dld.com.turns.indicator.PageIndicator
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="bottom"
+            android:layout_height="6dp"
+            android:layout_gravity="bottom|end"
             android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="5dp"
+            app:indicator_margin="2dp"
             app:indicator_radius="3dp"
-            app:indicator_shape="CIRCLE"
-            app:indicator_gravity="RIGHT"
             app:indicator_isScroll="true"
             android:id="@+id/pageIndicator"/>
 
@@ -33,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView

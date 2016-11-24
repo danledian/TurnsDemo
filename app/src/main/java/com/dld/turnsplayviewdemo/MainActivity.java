@@ -1,5 +1,7 @@
 package com.dld.turnsplayviewdemo;
 
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private PageIndicator mPageIndicator;
     private CheckBox mScrollEnableCb;
 
+    private ViewPager mVp;
+
+
     private String[] imageUrls = new String[]{
         "http://pic34.nipic.com/20131022/12106323_115210747368_2.jpg",
         "http://img4.imgtn.bdimg.com/it/u=1765260951,797831689&fm=21&gp=0.jpg",
@@ -42,16 +47,20 @@ public class MainActivity extends AppCompatActivity {
         mPageIndicator = (PageIndicator)findViewById(R.id.pageIndicator);
         mScrollEnableCb = (CheckBox)findViewById(R.id.isScrollEnable_cb);
 
+//        mVp = (ViewPager)findViewById(R.id.vp);
+//        mVp.setAdapter(new CPagerAdapter());
+//        mPageIndicator.setViewPager(mVp);
+
         mCycleViewPager.setAdapter(new BasePagerAdapter());
         mPageIndicator.setViewPager(mCycleViewPager);
 
-        mCycleViewPager.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, long id) {
-                Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mCycleViewPager.startAutoCycle();
+//        mCycleViewPager.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position, long id) {
+//                Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        mCycleViewPager.startAutoCycle();
 
     }
 
@@ -71,14 +80,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void setListener() {
 
-//        mScrollEnableCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        mScrollEnableCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                mPageIndicator.setIndicatorIsScroll(isChecked);
-//            }
-//        });
+
+                mCycleViewPager.setAdapter(new BasePagerAdapter());
+                mPageIndicator.setViewPager(mCycleViewPager);
+
+                mCycleViewPager.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position, long id) {
+                        Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                mCycleViewPager.startAutoCycle();
+
+            }
+        });
     }
 
     @Override

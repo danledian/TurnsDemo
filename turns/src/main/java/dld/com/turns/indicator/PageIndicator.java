@@ -8,11 +8,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import dld.com.turns.AutoCycleViewPager;
 import dld.com.turns.CycleViewPager;
 import dld.com.turns.R;
 import dld.com.turns.adapter.TurnsPagerAdapter;
@@ -22,6 +25,8 @@ import dld.com.turns.adapter.TurnsPagerAdapter;
  */
 public class PageIndicator<T extends Indicator> extends View implements ViewPager.OnPageChangeListener {
 
+
+    private static final String TAG = "PageIndicator";
 
     private final int DEFAULT_INDICATOR_RADIUS = dp2Px(3f);
     private static final int DEFAULT_INDICATOR_MARGIN = 20;
@@ -42,8 +47,8 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     private Indicator mCurrentIndicator;
 
     private boolean isAutoCycleViewPager;
-    private int gravity;
     private int count;
+    private int previousPosition = -1;
 
     private static final Shape[] shapes = {
             Shape.CIRCLE,
@@ -63,9 +68,6 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
         super(context, attrs, defStyleAttr);
         setUp(context, attrs);
     }
-
-    private int previousPosition = 0;
-
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -116,7 +118,6 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
             mIndicatorMargin = ta.getDimensionPixelSize(R.styleable.PageIndicator_indicator_margin, DEFAULT_INDICATOR_MARGIN);
             mIndicatorIsScroll = ta.getBoolean(R.styleable.PageIndicator_indicator_isScroll, DEFAULT_INDICATOR_IS_SCROLL);
             mBackgroundColor = ta.getColor(R.styleable.PageIndicator_indicator_background, Color.TRANSPARENT);
-            gravity = ta.getInteger(R.styleable.PageIndicator_indicator_gravity, 1);
             if(ta.hasValue(R.styleable.PageIndicator_indicator_shape)){
                 int integer = ta.getInteger(R.styleable.PageIndicator_indicator_shape, -1);
                 setIndicatorShape(shapes[integer]);
@@ -132,16 +133,30 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     public void setViewPager(ViewPager viewPager){
         if(viewPager == null || viewPager.getAdapter() == null)
             return;
-        if(viewPager instanceof CycleViewPager){
+
+        String simpleName = viewPager.getClass().getSimpleName();
+        Log.d(TAG, String.format(Locale.ENGLISH, "simpleName:%s", simpleName));
+
+        clear();
+        if(AutoCycleViewPager.class.getSimpleName().equalsIgnoreCase(simpleName)){
             isAutoCycleViewPager = true;
             count = ((TurnsPagerAdapter)viewPager.getAdapter()).getItemCount();
         }else {
             isAutoCycleViewPager = false;
             count = viewPager.getAdapter().getCount();
         }
+
+        Log.d(TAG, String.format("count:%d", count));
         addBgItem(count);
         addListener(viewPager);
+        requestLayout();
         invalidate();
+    }
+
+    private void clear(){
+        mCurrentIndicator = null;
+        previousPosition = -1;
+        count = 0;
     }
 
     private void addListener(ViewPager viewPager) {
@@ -173,19 +188,23 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
         layoutIndicator();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(count > 0){
+            int width = count * mIndicatorRadius * 2 + (count - 1) * mIndicatorMargin + getPaddingLeft() + getPaddingRight();
+            int height = mIndicatorRadius * 2 + getPaddingTop() + getPaddingBottom();
+
+            setMeasuredDimension(width, height);
+        }
+
+    }
+
     private void layoutIndicator() {
         if(mIndicators.size() == 0) return;
-        int length = mIndicators.size() * mIndicatorRadius * 2 + (mIndicators.size() - 1) * mIndicatorMargin;
-        int startX;
-        if(gravity == 0){
-            startX = 0;
-        }else if(gravity == 1){
-            startX = (getMeasuredWidth() - length)/2;
-        }else {
-            startX = getMeasuredWidth() - length;
-        }
+
         int y = getMeasuredHeight()/2 - mIndicatorRadius;
-        layoutBg(startX, y);
+        layoutBg(0, y);
         layoutSelectedIndicator(y);
     }
 
@@ -195,6 +214,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     }
 
     private void layoutBg(int startX, int y) {
+        Log.d(TAG, String.format("bg length:%d", mIndicators.size()));
         for(int i = 0;i < mIndicators.size();i++){
             Indicator indicator = mIndicators.get(i);
             indicator.setX(startX + i * (2 * mIndicatorRadius + mIndicatorMargin));
@@ -203,6 +223,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     }
 
     private void addBgItem(int count) {
+        mIndicators.clear();
         for(int i=0;i< count;i++){
             Indicator indicator = new Indicator.Builder()
             .setColor(mIndicatorUnselectedColor)

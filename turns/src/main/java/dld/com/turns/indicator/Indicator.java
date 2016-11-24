@@ -91,35 +91,37 @@ public class Indicator {
         }
 
         public Indicator build(){
-            Shape dShape = null;
-            Drawable drawable;
-            if(shape != null){
-                switch (shape){
-                    case CIRCLE:
-                        dShape = new OvalShape();
-                        break;
-                    case SQUARE:
-                        dShape = new RectShape();
-                        break;
-                    case ROUND_RECT:
-                        dShape = new RoundRectShape(new float[]{10, 10, 10, 10, 10, 10, 10, 10},
-                                null, new float[]{0, 0, 0, 0, 0, 0, 0, 0});
-                        break;
-                    default:
-                        break;
-                }
-                dShape.resize(width, height);
-                ShapeDrawable shapeDrawable = new ShapeDrawable(dShape);
-                Paint paint = shapeDrawable.getPaint();
-                paint.setAntiAlias(true);
-                paint.setColor(color);
-                if(mXfermode != null)
-                    paint.setXfermode(mXfermode);
-                drawable = shapeDrawable;
-            }else {
-                drawable = this.drawable;
+            shape = shape == null?PageIndicator.Shape.CIRCLE:shape;
+            if(this.drawable == null){
+                this.drawable = getShape(shape);
             }
-            return new Indicator(drawable);
+            return new Indicator(this.drawable);
+        }
+
+        private ShapeDrawable getShape(PageIndicator.Shape indicatorShape){
+            Shape dShape = null;
+            switch (indicatorShape){
+                case CIRCLE:
+                    dShape = new OvalShape();
+                    break;
+                case SQUARE:
+                    dShape = new RectShape();
+                    break;
+                case ROUND_RECT:
+                    dShape = new RoundRectShape(new float[]{10, 10, 10, 10, 10, 10, 10, 10},
+                            null, new float[]{0, 0, 0, 0, 0, 0, 0, 0});
+                    break;
+                default:
+                    break;
+            }
+            dShape.resize(width, height);
+            ShapeDrawable shapeDrawable = new ShapeDrawable(dShape);
+            Paint paint = shapeDrawable.getPaint();
+            paint.setAntiAlias(true);
+            paint.setColor(color);
+            if(mXfermode != null)
+                paint.setXfermode(mXfermode);
+            return shapeDrawable;
         }
     }
 
