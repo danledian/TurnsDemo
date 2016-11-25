@@ -99,6 +99,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
         mCurrentPosition = position;
         mCurrentPositionOffset = positionOffset;
         requestLayout();
+        invalidate();
     }
 
 
