@@ -3,7 +3,6 @@ package dld.com.turns;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import java.lang.reflect.Field;
@@ -15,7 +14,7 @@ import dld.com.turns.scroller.CycleViewScroller;
  * Created by song on 2016/11/18.
  */
 
-public class CycleViewPager extends ViewPager{
+public class CycleViewPager extends ViewPager {
 
     public interface OnCycleViewPageChangeListener {
 
@@ -114,18 +113,33 @@ public class CycleViewPager extends ViewPager{
             position = getCurrentItem();
 
             if(state == 1 || state == 0){
-                int count = cyclePagerAdapter.getCount();
-                int currentItem = -1;
-                if(position == 0){
-                    currentItem = count - 2;
-                }else if(position == count-1){
-                    currentItem = 1;
-                }
+//                int count = cyclePagerAdapter.getCount();
+//                int currentItem = -1;
+//                if(position == 0){
+//                    currentItem = count - 2;
+//                }else if(position == count-1){
+//                    currentItem = 1;
+//                }
+//                if(currentItem != -1)
+//                    setCurrentItem(currentItem, false);
+
+                int currentItem = getAtPosition(position);
+
                 if(currentItem != -1)
                     setCurrentItem(currentItem, false);
             }
 
         }
+    }
+
+    protected int getAtPosition(int position){
+        int currentItem = -1;
+        if(position == 0){
+            currentItem = count - 2;
+        }else if(position == count-1){
+            currentItem = 1;
+        }
+        return currentItem;
     }
 
     protected int getRealPosition(int position){

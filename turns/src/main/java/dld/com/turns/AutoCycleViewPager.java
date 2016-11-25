@@ -14,7 +14,7 @@ import java.lang.ref.SoftReference;
  * Created by song on 2016/11/21.
  */
 
-public class AutoCycleViewPager extends CycleViewPager{
+public class AutoCycleViewPager extends CycleViewPager {
 
     private static final String TAG = "AutoCycleViewPager";
 
@@ -109,8 +109,20 @@ public class AutoCycleViewPager extends CycleViewPager{
                         return;
                     int currentItem = viewPager.getCurrentItem();
                     Log.d(TAG, String.format("currentItem:%d", currentItem));
-                    viewPager.setCurrentItem(++currentItem);
-                    sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
+
+                    int atPosition = viewPager.getAtPosition(currentItem);
+                    if(atPosition != -1){
+                        viewPager.setCurrentItem(atPosition, false);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
+                            }
+                        }, 200);
+                    }else {
+                        viewPager.setCurrentItem(++currentItem);
+                        sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
+                    }
                     break;
             }
         }

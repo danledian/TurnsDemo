@@ -1,30 +1,24 @@
 package com.dld.turnsplayviewdemo;
 
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
 import dld.com.turns.AutoCycleViewPager;
-import dld.com.turns.CycleViewPager;
 import dld.com.turns.adapter.TurnsPagerAdapter;
 import dld.com.turns.indicator.PageIndicator;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AutoCycleViewPager mCycleViewPager;
     private PageIndicator mPageIndicator;
     private CheckBox mScrollEnableCb;
 
-    private ViewPager mVp;
+    private AutoCycleViewPager mAutoCycleViewPager;
 
 
     private String[] imageUrls = new String[]{
@@ -43,25 +37,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 
-        mCycleViewPager = (AutoCycleViewPager)findViewById(R.id.viewPager);
         mPageIndicator = (PageIndicator)findViewById(R.id.pageIndicator);
         mScrollEnableCb = (CheckBox)findViewById(R.id.isScrollEnable_cb);
+        mAutoCycleViewPager = (AutoCycleViewPager) findViewById(R.id.autoCycleViewPager);
 
-//        mVp = (ViewPager)findViewById(R.id.vp);
-//        mVp.setAdapter(new CPagerAdapter());
-//        mPageIndicator.setViewPager(mVp);
+        mAutoCycleViewPager.setAdapter(new BasePagerAdapter());
+        mPageIndicator.setViewPager(mAutoCycleViewPager);
 
-        mCycleViewPager.setAdapter(new BasePagerAdapter());
-        mPageIndicator.setViewPager(mCycleViewPager);
+    }
 
-//        mCycleViewPager.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position, long id) {
-//                Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        mCycleViewPager.startAutoCycle();
-
+    public void onClicked(View view) {
+        switch (view.getId()){
+            case R.id.start_bt:
+                mAutoCycleViewPager.startAutoCycle();
+                break;
+            case R.id.stop_bt:
+                mAutoCycleViewPager.stopAutoCycle();
+                break;
+        }
     }
 
     class BasePagerAdapter extends TurnsPagerAdapter {
@@ -83,36 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void setListener() {
 
-        mScrollEnableCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                mPageIndicator.setIndicatorIsScroll(isChecked);
-
-                mCycleViewPager.setAdapter(new BasePagerAdapter());
-                mPageIndicator.setViewPager(mCycleViewPager);
-
-                mCycleViewPager.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position, long id) {
-                        Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
-                    }
-                });
-//                mCycleViewPager.startAutoCycle();
-
-            }
-        });
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        mCycleViewPager.startAutoCycle();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mCycleViewPager.stopAutoCycle();
     }
 
 }
