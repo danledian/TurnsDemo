@@ -7,9 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+
+import java.util.Locale;
 
 import dld.com.turns.AutoCycleViewPager;
+import dld.com.turns.CycleViewPager;
 import dld.com.turns.adapter.TurnsPagerAdapter;
 import dld.com.turns.indicator.PageIndicator;
 
@@ -40,8 +44,15 @@ public class MainActivity extends AppCompatActivity {
         mPageIndicator = (PageIndicator)findViewById(R.id.pageIndicator);
         mScrollEnableCb = (CheckBox)findViewById(R.id.isScrollEnable_cb);
         mAutoCycleViewPager = (AutoCycleViewPager) findViewById(R.id.autoCycleViewPager);
+        BasePagerAdapter adapter = new BasePagerAdapter();
 
-        mAutoCycleViewPager.setAdapter(new BasePagerAdapter());
+        mAutoCycleViewPager.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, long id) {
+                Toast.makeText(MainActivity.this, String.format(Locale.ENGLISH, "%d", position), Toast.LENGTH_SHORT).show();
+            }
+        });
         mPageIndicator.setViewPager(mAutoCycleViewPager);
 
     }

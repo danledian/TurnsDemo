@@ -2,6 +2,8 @@
 无限循环逻辑部分采用[banner](https://github.com/youth5201314/banner)的思路，非常感谢[youth5201314](https://github.com/youth5201314)的开源。
 
 本项目具体实现将`ViewPager`和`PageIndicator`分离，具体应用场景可根据需求自行布局，`ViewPager`监听与实际监听保持一致。
+已加入到公司项目实际使用中，刚开始使用暴露出的问题，通过几个版本的优化，问题都已处理。现在呈现的效果，对于本人来说，基本满意。
+
 
 ![效果图](https://github.com/danledian/TurnsDemo/blob/master/demo/demo.gif)
 
@@ -50,10 +52,10 @@
 
 * 添加点击监听
 
-        mCycleViewPager.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CycleViewPager.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, long id) {
-                Toast.makeText(MainActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, String.format(Locale.ENGLISH, "%d", position), Toast.LENGTH_SHORT).show();
             }
         });
 
