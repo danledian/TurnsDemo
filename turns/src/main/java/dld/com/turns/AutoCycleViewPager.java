@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.lang.ref.SoftReference;
@@ -14,6 +15,8 @@ import java.lang.ref.SoftReference;
  */
 
 public class AutoCycleViewPager extends CycleViewPager{
+
+    private static final String TAG = "AutoCycleViewPager";
 
     private static final int FAST_INTERVAL = 1500;
 
@@ -47,11 +50,13 @@ public class AutoCycleViewPager extends CycleViewPager{
     }
 
     public void startAutoCycle(){
+        Log.d(TAG, "startAutoCycle");
         autoCycle = true;
         sendCycleMessage();
     }
 
     public void stopAutoCycle(){
+        Log.d(TAG, "stopAutoCycle");
         autoCycle = false;
         removeCycleMessage();
     }
@@ -103,6 +108,7 @@ public class AutoCycleViewPager extends CycleViewPager{
                     if(viewPager == null)
                         return;
                     int currentItem = viewPager.getCurrentItem();
+                    Log.d(TAG, String.format("currentItem:%d", currentItem));
                     viewPager.setCurrentItem(++currentItem);
                     sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
                     break;

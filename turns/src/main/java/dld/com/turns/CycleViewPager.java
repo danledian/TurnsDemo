@@ -69,7 +69,7 @@ public class CycleViewPager extends ViewPager{
         super.setAdapter(adapter);
         count = adapter.getCount();
         if(adapter.getCount() != 0)
-            setCurrentItem(1);
+            setCurrentItem(1, false);
     }
 
     private void initViewPagerScroll() {
