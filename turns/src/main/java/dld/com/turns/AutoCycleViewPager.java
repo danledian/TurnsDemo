@@ -18,9 +18,10 @@ public class AutoCycleViewPager extends CycleViewPager {
 
     private static final String TAG = "AutoCycleViewPager";
 
-    private static final int FAST_INTERVAL = 1500;
+    private static final int FAST_INTERVAL = 3000;
 
     private static final int MSG_AUTO_CYCLE = 1;
+    private static final int MSG_RESET_POSITION = 2;
 
     private CycleHandler mCycleHandler;
 
@@ -52,7 +53,15 @@ public class AutoCycleViewPager extends CycleViewPager {
     public void startAutoCycle(){
         Log.d(TAG, "startAutoCycle");
         autoCycle = true;
-        sendCycleMessage();
+        removeCycleMessage();
+        int atPosition = getAtPosition(getCurrentItem());
+        Log.d(TAG, String.format("atPosition:%d", atPosition));
+        if(atPosition != -1){
+            setCurrentItem(atPosition, false);
+            mCycleHandler.sendEmptyMessageDelayed(MSG_RESET_POSITION, 500);
+        }else {
+            mCycleHandler.sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
+        }
     }
 
     public void stopAutoCycle(){
@@ -63,10 +72,11 @@ public class AutoCycleViewPager extends CycleViewPager {
 
     private void removeCycleMessage(){
         mCycleHandler.removeMessages(MSG_AUTO_CYCLE);
+        mCycleHandler.removeMessages(MSG_AUTO_CYCLE);
     }
 
     private void sendCycleMessage(){
-        mCycleHandler.removeMessages(MSG_AUTO_CYCLE);
+        removeCycleMessage();
         mCycleHandler.sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
     }
 
@@ -111,18 +121,21 @@ public class AutoCycleViewPager extends CycleViewPager {
                     Log.d(TAG, String.format("currentItem:%d", currentItem));
 
                     int atPosition = viewPager.getAtPosition(currentItem);
+
+                    Log.d(TAG, String.format("atPosition:%d", atPosition));
+
                     if(atPosition != -1){
                         viewPager.setCurrentItem(atPosition, false);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
-                            }
-                        }, 200);
+
+                        sendEmptyMessageDelayed(MSG_RESET_POSITION, 500);
                     }else {
                         viewPager.setCurrentItem(++currentItem);
                         sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
                     }
+                    break;
+                case MSG_RESET_POSITION:
+                    Log.d(TAG, "MSG_RESET_POSITION");
+                    sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
                     break;
             }
         }

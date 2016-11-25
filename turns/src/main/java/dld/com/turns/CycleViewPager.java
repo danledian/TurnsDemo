@@ -109,7 +109,6 @@ public class CycleViewPager extends ViewPager {
         @Override
         public void onPageScrollStateChanged(int state) {
 
-            TurnsPagerAdapter cyclePagerAdapter = (TurnsPagerAdapter) getAdapter();
             position = getCurrentItem();
 
             if(state == 1 || state == 0){
