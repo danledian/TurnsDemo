@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 8
-        versionName "1.0.8"
+        versionCode 9
+        versionName "1.0.9"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -35,7 +35,7 @@ def siteUrl = 'https://github.com/danledian/TurnsDemo'      // Homepage URL of t
 def gitUrl = 'https://github.com/danledian/TurnsDemo.git'
 
 
-version = "1.0.8"
+version = "1.0.9"
 group = "com.dld.library"                                        // Maven Group ID for the artifact
 install {
     repositories.mavenInstaller {
