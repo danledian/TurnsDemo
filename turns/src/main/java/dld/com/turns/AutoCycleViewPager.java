@@ -57,7 +57,7 @@ public class AutoCycleViewPager extends CycleViewPager {
         int atPosition = getAtPosition(getCurrentItem());
         Log.d(TAG, String.format("atPosition:%d", atPosition));
         if(atPosition != -1){
-            setCurrentItem(atPosition, false);
+            setCurrentItem(1, false);
             mCycleHandler.sendEmptyMessageDelayed(MSG_RESET_POSITION, 500);
         }else {
             mCycleHandler.sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
@@ -125,10 +125,12 @@ public class AutoCycleViewPager extends CycleViewPager {
                     Log.d(TAG, String.format("atPosition:%d", atPosition));
 
                     if(atPosition != -1){
-                        viewPager.setCurrentItem(atPosition, false);
+                        viewPager.setCurrentItem(currentItem, false);
 
-                        sendEmptyMessageDelayed(MSG_RESET_POSITION, 500);
+                        sendEmptyMessageDelayed(MSG_RESET_POSITION, 1000);
                     }else {
+                        Log.d(TAG, String.format("filing currentItem:%d", currentItem));
+
                         viewPager.setCurrentItem(++currentItem);
                         sendEmptyMessageDelayed(MSG_AUTO_CYCLE, intervalTime);
                     }

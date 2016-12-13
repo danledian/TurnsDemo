@@ -31,7 +31,7 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
     private final int DEFAULT_INDICATOR_RADIUS = dp2Px(3f);
     private static final int DEFAULT_INDICATOR_MARGIN = 20;
     private static final int DEFAULT_INDICATOR_SELECTED_COLOR = Color.parseColor("#4579D3");
-    private static final int DEFAULT_INDICATOR_UNSELECTED_COLOR = Color.WHITE;
+    private static final int DEFAULT_INDICATOR_UNSELECTED_COLOR = Color.GRAY;
     private static final boolean DEFAULT_INDICATOR_IS_SCROLL = false;
 
     private boolean mIndicatorIsScroll;
@@ -231,7 +231,6 @@ public class PageIndicator<T extends Indicator> extends View implements ViewPage
             .setHeight(mIndicatorRadius * 2)
             .setWidth(mIndicatorRadius * 2)
             .setShape(mIndicatorShape)
-            .setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN))
             .build();
             mIndicators.add((T) indicator);
         }

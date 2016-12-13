@@ -112,16 +112,6 @@ public class CycleViewPager extends ViewPager {
             position = getCurrentItem();
 
             if(state == 1 || state == 0){
-//                int count = cyclePagerAdapter.getCount();
-//                int currentItem = -1;
-//                if(position == 0){
-//                    currentItem = count - 2;
-//                }else if(position == count-1){
-//                    currentItem = 1;
-//                }
-//                if(currentItem != -1)
-//                    setCurrentItem(currentItem, false);
-
                 int currentItem = getAtPosition(position);
 
                 if(currentItem != -1)

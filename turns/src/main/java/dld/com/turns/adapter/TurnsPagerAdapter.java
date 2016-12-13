@@ -4,6 +4,7 @@ import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import dld.com.turns.CycleViewPager;
 
@@ -11,7 +12,7 @@ import dld.com.turns.CycleViewPager;
  * Created by song on 2016/11/21.
  */
 
-public abstract class TurnsPagerAdapter extends PagerAdapter{
+public abstract class TurnsPagerAdapter extends PagerAdapter {
 
     private SparseArray<Object> mItemViews;
     private CycleViewPager.OnItemClickListener mOnItemClickListener;
@@ -73,13 +74,18 @@ public abstract class TurnsPagerAdapter extends PagerAdapter{
             ((View)obj).setOnClickListener(new ViewPagerOnClickListener(getRealPosition(position)));
             mItemViews.put(position, obj);
         }
+        ViewParent viewParent = ((View)obj).getParent();
+        if(viewParent != null){
+            ((ViewGroup)viewParent).removeView((View)obj);
+        }
         container.addView(((View) obj), ((View)obj).getLayoutParams());
         return obj;
     }
 
     @Override
     final public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) mItemViews.get(position));
+        if(position > 1 && position < getItemCount())
+            container.removeView((View) mItemViews.get(position));
     }
 
     @Override
